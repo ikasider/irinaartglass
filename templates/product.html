@@ -39,6 +39,12 @@
     </header>
 
     <main>
+        <div class="category">
+                <a href="{{ url_for('show_category', cat_name=item.category) }}">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span data-en="Back" data-ru="Назад" data-he="לחזור">Back</span>
+                </a>
+        </div>
         <div class="product-container {% if not item.available %}is-sold{% endif %}">
             <div class="product-info">
                 <div class="image-wrapper">
