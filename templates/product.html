@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irina Artglass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body>
+    <header>
+        <div class="language-switcher">
+            <select onchange="setLanguage(this.value)">
+                <option value="en">🇬🇧 English</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="he">🇮🇱 עברית</option>
+            </select>
+        </div>
+        <a href="{{ url_for('main') }}"><h1>Irina Artglass</h1></a>
+        <p>Capturing the world through glass</p>
+        <div class="phone-number">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('shop') }}" data-en="Shop" data-ru="Магазин" data-he="חנות">Shop</a></li>
+            <li><a href="{{ url_for('about') }}" data-en="About" data-ru="Обо мне" data-he="עליי">About</a></li>
+            <li><a href="{{ url_for('gallery') }}" data-en="Gallery" data-ru="Галерея" data-he="גלריה">Gallery</a></li>
+            <li><a href="{{ url_for('contact') }}" data-en="Contact" data-ru="Контакты" data-he="צור קשר">Contact</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="product-container {% if not item.available %}is-sold{% endif %}">
+            <div class="product-info">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename=item.image) }}" class="product-image">
+                    {% if not item.available %}
+                        <div class="sold-badge" data-en="Sold" data-ru="Продано" data-he="נמכר">Sold</div>
+                    {% endif %}
+                </div>
+                <h1>{{ item.name }}</h1>
+                <p class="product-cost">{{ item.cost }} ₪</p>
+            </div>
+
+            <div class="product-details">
+                <div class="product-description">
+                    <h2 data-en="Description" data-ru="Описание" data-he="תיאור">Description</h2>
+                    <p>{{ item.description }}</p>
+                </div>
+
+                {% if item.available %}
+                    <a id="contactBtn" href="https://wa.me/972533432657?text=..." target="_blank" class="contact-button">
+                        <i class="fab fa-whatsapp"></i> 
+                        <span data-en="Contact" data-ru="Связаться" data-he="צור קשר">Contact</span>
+                    </a>
+                {% else %}
+                    <button class="contact-button sold-button" disabled>
+                        <span data-en="Not Available" data-ru="Нет в наличии" data-he="לא זמין">Not Available</span>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="imageModal" class="modal">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="imgFull">
+        </div>
+    </main>
+
+    <footer>
+        <div class="phone-number-footer">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <a href="{{ url_for('admin_login')}}" style="text-decoration: none; color: inherit;"><p class="copyright">© Irina Artglass. All rights reserved.</p></a>
+        <div class="social">
+            <a href="https://www.instagram.com/irina_artglass"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/16sC3PH6xf/"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+    </footer>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById("imageModal");
+    const img = document.querySelector(".product-image");
+    const modalImg = document.getElementById("imgFull");
+    const closeBtn = document.querySelector(".close-modal");
+
+    if (modal && img && modalImg) {
+        img.onclick = function() {
+            modal.style.display = "flex";
+            modalImg.src = this.src;
+        }
+
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+});
+</script>
+<script src="/static/script.js"></script>
+</html>

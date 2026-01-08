@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Редактирование: {{ product.name }}</h2>
+    <form method="POST" enctype="multipart/form-data">
+    <label>Название:</label>
+    <input type="text" name="name" value="{{ product.name }}"><br>
+
+    <label>Цена:</label>
+    <input type="number" step="0.01" name="cost" value="{{ product.cost }}"><br>
+
+
+    <p>Выберите категории:</p>
+    <div class="category-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+        {% set all_categories = [
+            ('earrings', 'Серьги'),
+            ('bracelets', 'Браслеты'),
+            ('rings', 'Кольца'),
+            ('necklaces', 'Ожерелья'),
+            ('sale', 'СКИДКИ'),
+            ('chockers', 'Чокеры'),
+            ('chains', 'Цепочки'),
+            ('glassorbs', 'Дутыши'),
+            ('pb', 'Пандора'),
+            ('sets', 'Наборы'),
+            ('pendants', 'Подвески'),
+            ('dread-beads', 'Дреды'),
+            ('historical-beads', 'Исторические'),
+            ('brooches', 'Броши'),
+            ('key-chains', 'Брелоки')
+        ] %}
+
+        {% for val, name in all_categories %}
+        <label style="cursor: pointer;">
+            <input type="checkbox" name="categories" value="{{ val }}" 
+                {% if current_cats and val in current_cats %} checked {% endif %}> 
+            {{ name }}
+        </label>
+        {% endfor %}
+    </div>
+
+    <p>Текущее фото: <br>
+    <img src="{{ url_for('static', filename=product.image) }}" width="100"></p>
+
+    <label>Заменить фото (оставьте пустым, чтобы не менять):</label>
+    <input type="file" name="image_file"><br><br>
+
+    <label>Описание:</label><br>
+    <textarea name="description" rows="4" style="width: 100%">{{ product.description }}</textarea><br><br>
+
+    <label>
+    <input type="checkbox" name="available" {% if product.available %}checked{% endif %}>
+    В наличии
+    </label>
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+</body>
+</html>

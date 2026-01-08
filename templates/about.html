@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irina Artglass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body>
+    <header>
+        <div class="language-switcher">
+            <select onchange="setLanguage(this.value)">
+                <option value="en">🇬🇧 English</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="he">🇮🇱 עברית</option>
+            </select>
+        </div>
+        <a href="{{ url_for('main') }}"><h1>Irina Artglass</h1></a>
+        <p>Capturing the world through glass</p>
+        <div class="phone-number">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('shop') }}" data-en="Shop" data-ru="Магазин" data-he="חנות">Shop</a></li>
+            <li><a href="{{ url_for('about') }}" data-en="About" data-ru="Обо мне" data-he="עליי">About</a></li>
+            <li><a href="{{ url_for('gallery') }}" data-en="Gallery" data-ru="Галерея" data-he="גלריה">Gallery</a></li>
+            <li><a href="{{ url_for('contact') }}" data-en="Contact" data-ru="Контакты" data-he="צור קשר">Contact</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="hero-about">
+            <h2 data-en="Irina Derevyankina - master of lampwork"
+                data-ru="Ирина Деревянкина - мастер лэмпворка"
+                data-he="lampwork אירינה דרביינקינה - אמנית ">
+                Irina Derevyankina - master of glassblowing
+            </h2>
+        </div>
+
+        <section class="about-me">
+            <h2 
+                data-en="About me" 
+                data-ru="Обо мне" 
+                data-he="עליי">
+                About me
+            </h2>
+
+            <p 
+                data-en="My name is Irina Derevyankina. I practice lampwork — an ancient technique of creating glass jewelry. 
+                Since 2017, I've been crafting beads and miniature sculptures born in the flame. 
+                It all started as a passion… now it has become my world." 
+                data-ru="Меня зовут Ирина Деревянкина. Я занимаюсь лэмпворком — древней техникой создания стеклянных украшений. 
+                С 2017 года я создаю бусины и миниатюрные скульптуры, рождающиеся в огне. 
+                Всё началось как увлечение… теперь это мой мир." 
+                data-he="שמי אירינה דרביינקינה. אני עוסקת בלמפוורק — טכניקה עתיקה ליצירת תכשיטי זכוכית. 
+                מאז 2017 אני יוצרת חרוזים ופסלים זעירים שנולדים מהלהבה. 
+                זה התחיל כתשוקה… ועכשיו זה הפך לעולמי.">
+                My name is Irina Derevyankina. I practice lampwork — an ancient technique of creating glass jewelry...
+            </p>
+
+        </section>
+
+        
+
+        <section class="what-is">
+            <h2
+                data-en="What is lampwork?"
+                data-ru="Что такое лэмпворк?"
+                data-he="מה זה למפוורק?">
+                What is lampwork
+            </h2>
+            <div class="what-is-grid">
+                <div class="what-is-card">
+                    <p 
+                        data-en="🔥 Lampwork — melting glass in the flame of a gas torch" 
+                        data-ru="🔥 Лэмпворк — плавление стекла в пламени газовой горелки" 
+                        data-he="🔥 למפוורק — התכת זכוכית בלהבת מבער גז">
+                        🔥 Lampwork — melting glass in the flame of a gas torch
+                    </p>
+                </div>
+                <div class="what-is-card">
+                    <p
+                        data-en="🏺 History — from Ancient Assyria to Venice" 
+                        data-ru="🏺 История — от Древней Ассирии до Венеции" 
+                        data-he="🏺 היסטוריה — מהאימפריה האשורית ועד ונציה">
+                        🏺 History — from Ancient Assyria to Venice
+                    </p>
+                </div>
+                <div class="what-is-card">
+                    <p  
+                        data-en="🧪 Temperature — 1100–1200°C"
+                        data-ru="🧪 Температура — 1100–1200°C"
+                        data-he="🧪 טמפרטורה — 1100–1200°C">
+                        🧪 Temperature — 1100–1200°C
+                    </p>
+                </div>
+                <div class="what-is-card">
+                    <p
+                        data-en="🧱 Mandrel — a metal rod for shaping beads"
+                        data-ru="🧱 Мандрель — металлический стержень для формирования бусин"
+                        data-he="🧱 מנדראל — מוט מתכת לעיצוב חרוזים">
+                        🏭 Kilns and annealing — how a bead becomes strong
+                    </p>
+                </div>
+            </div>
+        </section>
+
+       <section class="irina-derevyankina">
+            <p 
+                data-en="
+                Did you know that lampwork is a method of making glass items — primarily beads — by melting glass in the flame of a gas torch and shaping it as desired? 
+                The name comes from ancient times when glassblowers used oil lamps and bellows to melt glass. 
+                The oldest glass beads discovered by archaeologists date back to ancient Assyria. 
+                Some researchers even believe that lampworking originated in Ancient Egypt and Mesopotamia around 4000–5000 years ago.
+                Lampwork is also known as Murano or Venetian glass, because many artists work with Italian glass produced on the island of Murano — world-famous for its glassmaking. 
+                Murano glass is widely available, affordable, and known for its consistent color palette. 
+                But there are many other excellent producers of soda-lime glass whose materials are just as good — and highly valued among lampworkers. 
+                For example, the American silver-rich glass Double Helix allows artists to create stunning, one-of-a-kind patterns. 
+                There are also beloved glass types from Germany, the Czech Republic, China, and more — each offering unique colors and shades.
+                The process of working with glass goes like this: The glass is melted in the flame of a gas torch at temperatures of 1100–1200°C to shape it. 
+                The molten glass is either blown through a special tube (to create hollow beads) or wound onto a metal rod called a mandrel. 
+                If the mandrel isn’t coated with a special release agent, the glass will fuse to the metal. 
+                And due to the difference in thermal expansion between glass and metal, the bead would crack as it cools. 
+                That’s why artists use a clay-based separator. Once the bead is formed, it’s placed — still hot — into a special kiln heated to around 500°C. 
+                The kiln slowly cools the beads over several hours, relieving internal stress and strengthening them. This process is called annealing.
+                The result? Completely unique beads and miniature sculptures — no two are ever exactly alike.
+                Working with glass goes far beyond simple crafting — it’s a true form of jewelry art, deeply engaging, rare, and rooted in ancient tradition." 
+
+                data-ru="
+                Знаете ли вы, что лэмпворк — это способ изготовления стеклянных изделий, в основном бусин, путём плавления стекла в пламени газовой горелки и придания ему формы?
+                Название происходит из древности, когда стеклодувы использовали масляные лампы и меха для плавки стекла.
+                Самые древние стеклянные бусины, найденные археологами, относятся к эпохе Ассирии.
+                Некоторые исследователи считают, что лэмпворк зародился в Древнем Египте и Месопотамии около 4000–5000 лет назад.
+                Лэмпворк также известен как муранское или венецианское стекло, поскольку многие мастера работают с итальянским стеклом, производимым на острове Мурано — всемирно известном центре стеклоделия.
+                Муранское стекло доступно, недорого и славится стабильной цветовой палитрой.
+                Но есть и другие отличные производители натриево-известкового стекла, материалы которых ценятся среди мастеров.
+                Например, американское серебросодержащее стекло Double Helix позволяет создавать уникальные, неповторимые узоры.
+                Также популярны стекла из Германии, Чехии, Китая и других стран — каждое со своими оттенками и особенностями.
+                Процесс работы со стеклом выглядит так: стекло плавится в пламени газовой горелки при температуре 1100–1200°C и формируется.
+                Расплавленное стекло либо выдувается через специальную трубку (для создания полых бусин), либо наматывается на металлический стержень — мандрелу.
+                Если мандрела не покрыта специальным разделительным составом, стекло прилипнет к металлу.
+                А из-за разницы в коэффициентах теплового расширения стекло может треснуть при остывании.
+                Поэтому мастера используют глиняный сепаратор.
+                После формирования бусина помещается — ещё горячей — в специальную печь, нагретую до 500°C.
+                Печь медленно охлаждает бусины в течение нескольких часов, снимая внутреннее напряжение и укрепляя их. Этот процесс называется отжигом.
+                Результат? Уникальные бусины и миниатюрные скульптуры — ни одна не повторяет другую.
+                Работа со стеклом — это не просто ремесло, это настоящее ювелирное искусство, глубокое, редкое и уходящее корнями в древние традиции."
+
+                data-he="
+                ידעתם שלמפוורק היא שיטה ליצירת פריטי זכוכית — בעיקר חרוזים — על ידי התכת זכוכית בלהבת מבער גז ועיצוב לפי רצון?
+                השם מגיע מהתקופה שבה אמני זכוכית השתמשו במנורות שמן ובלונים כדי להתיך זכוכית.
+                החרוזים העתיקים ביותר שהתגלו על ידי ארכיאולוגים מקורם באשור העתיקה.
+                חוקרים מסוימים מאמינים שלמפוורק התחיל כבר במצרים ובמסופוטמיה לפני כ-4000–5000 שנה.
+                למפוורק ידוע גם כזכוכית מוראנו או וונציאנית, כי אמנים רבים משתמשים בזכוכית איטלקית שמיוצרת באי מוראנו — מרכז עולמי לאמנות הזכוכית.
+                זכוכית מוראנו זמינה, משתלמת ומוכרת בזכות צבעים עקביים.
+                אבל יש גם יצרנים מצוינים אחרים של זכוכית סודה-ליים, שחומרים שלהם מוערכים מאוד בקרב אמני למפוורק.
+                למשל, זכוכית אמריקאית עשירה בכסף בשם Double Helix מאפשרת ליצור דוגמאות מדהימות וייחודיות.
+                יש גם סוגי זכוכית אהובים מגרמניה, צ'כיה, סין ועוד — כל אחד מציע גוונים ייחודיים.
+                תהליך העבודה עם זכוכית נראה כך: הזכוכית מותכת בלהבת מבער גז בטמפרטורה של 1100–1200°C ונוצרת.
+                הזכוכית המותכת ננשפת דרך צינור מיוחד (ליצירת חרוזים חלולים) או נכרכת על מוט מתכת שנקרא מנדרל.
+                אם המנדרל לא מצופה בחומר הפרדה, הזכוכית תידבק למתכת.
+                ובגלל הבדל בהתרחבות תרמית בין זכוכית למתכת, החרוז ייסדק כשהוא יתקרר.
+                לכן אמנים משתמשים במפריד מבוסס חימר.
+                לאחר יצירת החרוז, הוא מוכנס — כשהוא עדיין חם — לתנור מיוחד שחומם לכ-500°C.
+                התנור מקרר את החרוזים באיטיות במשך שעות, מפחית מתח פנימי ומחזק אותם. התהליך הזה נקרא חישול.
+                התוצאה? חרוזים ופסלים זעירים ייחודיים — אין שניים זהים.
+                עבודה עם זכוכית היא הרבה מעבר למלאכה פשוטה — זו אמנות תכשיטים אמיתית, מעמיקה, נדירה ושורשית במסורת עתיקה.">
+                Greetings everyone, I'm Irina Derevyankina — Irina_ArtGlass, a lampwork glass artist. 
+                I’ve been creating handmade glass jewelry using the lampwork technique since 2017.
+                Did you know that lampwork is a method of making glass items — primarily beads — by melting glass in the flame of a gas torch and shaping it as desired? 
+                The name comes from ancient times when glassblowers used oil lamps and bellows to melt glass. 
+                The oldest glass beads discovered by archaeologists date back to ancient Assyria. 
+                Some researchers even believe that lampworking originated in Ancient Egypt and Mesopotamia around 4000–5000 years ago.
+                Lampwork is also known as Murano or Venetian glass, because many artists work with Italian glass produced on the island of Murano — world-famous for its glassmaking. 
+                Murano glass is widely available, affordable, and known for its consistent color palette. 
+                But there are many other excellent producers of soda-lime glass whose materials are just as good — and highly valued among lampworkers. 
+                For example, the American silver-rich glass Double Helix allows artists to create stunning, one-of-a-kind patterns. 
+                There are also beloved glass types from Germany, the Czech Republic, China, and more — each offering unique colors and shades.
+                The process of working with glass goes like this: The glass is melted in the flame of a gas torch at temperatures of 1100–1200°C to shape it. 
+                The molten glass is either blown through a special tube (to create hollow beads) or wound onto a metal rod called a mandrel. 
+                If the mandrel isn’t coated with a special release agent, the glass will fuse to the metal. 
+                And due to the difference in thermal expansion between glass and metal, the bead would crack as it cools. 
+                That’s why artists use a clay-based separator. Once the bead is formed, it’s placed — still hot — into a special kiln heated to around 500°C. 
+                The kiln slowly cools the beads over several hours, relieving internal stress and strengthening them. This process is called annealing.
+                The result? Completely unique beads and miniature sculptures — no two are ever exactly alike.
+                Working with glass goes far beyond simple crafting — it’s a true form of jewelry art, deeply engaging, rare, and rooted in ancient tradition.
+            </p>
+
+        </section>
+
+        <section class="emotional">
+            <p 
+                data-en="Working with glass is a dialogue with fire. You can't control it. 
+                You can only learn to feel when it's ready to help you create." 
+                data-ru="Работа со стеклом — это диалог с огнём. Его невозможно контролировать. 
+                Можно лишь почувствовать, когда он готов помочь тебе творить." 
+                data-he="לעבוד עם זכוכית זה דיאלוג עם אש. אי אפשר לשלוט בה. 
+                אפשר רק ללמוד להרגיש מתי היא מוכנה לעזור לך ליצור.">
+                Working with glass is a dialogue with fire. You can't control it. 
+                You can only learn to feel when it's ready to help you create.
+            </p>
+        </section>
+
+        <section class="to-see">
+            <p 
+                data-en="Want to see glass in a new light?
+                Take a look at my jewelry — and choose the one that speaks to you." 
+
+                data-ru="Хотите взглянуть на стекло по-новому?
+                Посмотрите мои украшения — и выберите то, что отзовётся именно вам." 
+
+                data-he="רוצים לראות זכוכית באור חדש?
+                הסתכלו על התכשיטים שלי — ובחרו את זה שמדבר אליכם.">
+                Want to see glass in a new light?
+                Take a look at my jewelry — and choose the one that speaks to you.
+            </p>
+
+            <a 
+                href="{{ url_for('shop') }}" 
+                data-en="To see" 
+                data-ru="Смотреть" 
+                data-he="לצפות">
+                To see
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="phone-number-footer">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <a href="{{ url_for('admin_login')}}" style="text-decoration: none; color: inherit;"><p class="copyright">© Irina Artglass. All rights reserved.</p></a>
+        <div class="social">
+            <a href="https://www.instagram.com/irina_artglass"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/16sC3PH6xf/"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+    </footer>
+
+</body>
+<script src="/static/script.js"></script>
+</html>

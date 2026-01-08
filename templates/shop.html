@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irina Artglass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body>
+    <header>
+        <div class="language-switcher">
+            <select onchange="setLanguage(this.value)">
+                <option value="en">🇬🇧 English</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="he">🇮🇱 עברית</option>
+            </select>
+        </div>
+        <a href="{{ url_for('main') }}"><h1>Irina Artglass</h1></a>
+        <p>Capturing the world through glass</p>
+        <div class="phone-number">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('shop') }}" data-en="Shop" data-ru="Магазин" data-he="חנות">Shop</a></li>
+            <li><a href="{{ url_for('about') }}" data-en="About" data-ru="Обо мне" data-he="עליי">About</a></li>
+            <li><a href="{{ url_for('gallery') }}" data-en="Gallery" data-ru="Галерея" data-he="גלריה">Gallery</a></li>
+            <li><a href="{{ url_for('contact') }}" data-en="Contact" data-ru="Контакты" data-he="צור קשר">Contact</a></li>
+        </ul>
+    </header>
+    <main>
+        <h1 class="glass-shop" 
+            data-en="Glass shop" 
+            data-ru="Магазин стекла" 
+            data-he="חנות זכוכית">
+            Glass shop
+        </h1>
+
+        <section class="carousel-wrapper">
+            <div 
+            class="carousel-header" 
+            data-en="New In" 
+            data-ru="Новинки" 
+            data-he="חדש באתר">
+            New In
+            </div>
+            <div class="carousel">
+                <div class="carousel-inner" id="carousel-inner">
+                    {% for item in carousel_items %}
+                    <div class="carousel-item">
+                        <a href="{{ url_for('product', product_id=item.id) }}">
+                            <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}">
+                            <div class="carousel-caption" style="display: none;">{{ item.name }}</div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="categories">
+            <div 
+            class="categories-header" 
+            data-en="Categories" 
+            data-ru="Категории" 
+            data-he="קטגוריות">
+            Categories
+            </div>
+            <div class="categories-list">
+            <ul class="category-grid">
+                <li><a href="{{ url_for('show_category', cat_name='earrings') }}" class="category-link"><div class="category-div" id="earrings"><p data-en="Earrings" data-ru="Серьги" data-he="עגילים">Earrings</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='chockers') }}" class="category-link"><div class="category-div" id="chockers"><p data-en="Chockers" data-ru="Чокеры" data-he="צ'וקרים">Chockers</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='chains') }}" class="category-link"><div class="category-div" id="chains"><p data-en="Chains" data-ru="Цепочки" data-he="שרשראות">Chains</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='glassorbs') }}" class="category-link"><div class="category-div" id="glassorbs"><p data-en="Chains" data-ru="Дутыши" data-he="נפחיתים">Glassorbs</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='necklaces') }}" class="category-link"><div class="category-div" id="necklaces"><p data-en="Necklaces" data-ru="Ожерелья" data-he="שרשראות">Necklaces</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='beads-pandora') }}" class="category-link"><div class="category-div" id="beads-pandora"><p data-en="Beads for Pandora-type bracelets" data-ru="Бусины для браслетов Pandora" data-he="חרוזים לצמידי פנדורה">Beads for Pandora-type bracelets</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='bracelets') }}" class="category-link"><div class="category-div" id="bracelets"><p data-en="Bracelets" data-ru="Браслеты" data-he="צמידים">Bracelets</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='sets') }}" class="category-link"><div class="category-div" id="sets"><p data-en="Sets" data-ru="Наборы" data-he="סטים">Sets</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='pendants') }}" class="category-link"><div class="category-div" id="pendants"><p data-en="Pendants" data-ru="Кулоны" data-he="תליונים">Pendants</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='rings') }}" class="category-link"><div class="category-div" id="rings"><p data-en="Rings" data-ru="Кольца" data-he="טבעות">Rings</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='dread-beads') }}" class="category-link"><div class="category-div" id="dread-beads"><p data-en="Dread beads" data-ru="Бусины для дредов" data-he="חרוזים לראסטות">Dread beads</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='historical-beads') }}" class="category-link"><div class="category-div" id="historical-beads"><p data-en="Historical beads" data-ru="Исторические бусины" data-he="חרוזים היסטוריים">Historical beads</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='sale') }}" class="category-link"><div class="category-div" id="sale"><p data-en="Sale" data-ru="Скидки" data-he="מבצעים">Sale</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='brooches') }}" class="category-link"><div class="category-div" id="brooches"><p data-en="Brooches" data-ru="Броши" data-he="סיכות">Brooches</p></div></a></li>
+                <li><a href="{{ url_for('show_category', cat_name='key-chains') }}" class="category-link"><div class="category-div" id="key-chains"><p data-en="Key chains" data-ru="Брелоки" data-he="מחזיקי מפתחות">Key chains</p></div></a></li>
+            </ul>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer>
+        <div class="phone-number-footer">
+            <i class="fa-solid fa-phone"></i>
+            <span>+972 53 343 2657</span>
+        </div>
+        <a href="{{ url_for('admin_login')}}" style="text-decoration: none; color: inherit;"><p class="copyright">© Irina Artglass. All rights reserved.</p></a>
+        <div class="social">
+            <a href="https://www.instagram.com/irina_artglass"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/16sC3PH6xf/"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+    </footer>
+
+
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const inner = document.getElementById("carousel-inner");
+    inner.innerHTML += inner.innerHTML;
+    });
+</script>
+<script src="/static/script.js"></script>
+</html>

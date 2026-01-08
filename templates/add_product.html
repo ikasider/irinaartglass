@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Добавить товар в базу</h1>
+    <form method="POST" enctype="multipart/form-data" style="max-width: 400px; margin: 20px auto;">
+    <h2>Новый товар</h2>
+    <label>Название:</label><br>
+    <input type="text" name="name" required style="width: 100%"><br><br>
+
+    <label>Цена (₪):</label><br>
+    <input type="number" step="0.01" name="cost" required style="width: 100%"><br><br>
+
+    <label>Фото изделия:</label><br>
+    <input type="file" name="image_file" accept="image/*" required><br><br>
+
+        <label>Категории:</label><br>
+            <input type="checkbox" name="categories" value="rings"> Кольца<br>
+            <input type="checkbox" name="categories" value="sale"> Скидки<br>
+            <input type="checkbox" name="categories" value="earrings"> Серьги<br>
+            <input type="checkbox" name="categories" value="bracelets"> Браслеты<br>
+            <input type="checkbox" name="categories" value="necklaces"> Ожерелья<br>
+            <input type="checkbox" name="categories" value="chockers"> Чокеры<br>
+            <input type="checkbox" name="categories" value="chains"> Цепочки<br>
+            <input type="checkbox" name="categories" value="glassorbs"> Дутыши<br>
+            <input type="checkbox" name="categories" value="pb"> Пандора<br>
+            <input type="checkbox" name="categories" value="sets"> Наборы<br>
+            <input type="checkbox" name="categories" value="pendants"> Подвески<br>
+            <input type="checkbox" name="categories" value="dread-beads"> Дреды<br>
+            <input type="checkbox" name="categories" value="historical-beads"> Исторические<br>
+            <input type="checkbox" name="categories" value="brooches"> Броши<br>
+            <input type="checkbox" name="categories" value="key-chains"> Брелоки<br><br>
+
+        <label>Описание:</label><br>
+        <textarea name="description" rows="4" style="width: 100%"></textarea><br><br>
+
+        <label>
+            <input type="checkbox" name="available" checked>
+            В наличии
+        </label><br><br>
+
+    <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+        Опубликовать в магазине
+    </button>
+    <a href="{{ url_for('admin_dashboard') }}">Назад к панели администратора</a>
+    <a href="{{ url_for('main') }}">Назад к главной странице</a>
+</form>
+</body>
+
+</html>

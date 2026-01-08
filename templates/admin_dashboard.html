@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Управление товарами</h2>
+    <div>
+        <h3>Фильтр</h3>
+        <div>
+            <a href="{{ url_for('admin_dashboard') }}">Все категории</a>
+            <a href="{{ url_for('admin_dashboard', category='earrings') }}">Серьги</a>
+            <a href="{{ url_for('admin_dashboard', category='bracelets') }}">Браслеты</a>
+            <a href="{{ url_for('admin_dashboard', category='rings') }}">Кольца</a>
+            <a href="{{ url_for('admin_dashboard', category='necklaces') }}">Ожерелья</a>
+            <a href="{{ url_for('admin_dashboard', category='sale') }}">Скидки</a>
+            <a href="{{ url_for('admin_dashboard', category='chockers') }}">Чокеры</a>
+            <a href="{{ url_for('admin_dashboard', category='chains') }}">Цепочки</a>
+            <a href="{{ url_for('admin_dashboard', category='glassorbs') }}">Дутыши</a>
+            <a href="{{ url_for('admin_dashboard', category='pb') }}">Пандора</a>
+            <a href="{{ url_for('admin_dashboard', category='sets') }}">Наборы</a>
+            <a href="{{ url_for('admin_dashboard', category='pendants') }}">Подвески</a>
+            <a href="{{ url_for('admin_dashboard', category='dread-beads') }}">Дреды</a>
+            <a href="{{ url_for('admin_dashboard', category='historical-beads') }}">Исторические</a>
+            <a href="{{ url_for('admin_dashboard', category='brooches') }}">Броши</a>
+            <a href="{{ url_for('admin_dashboard', category='key-chains') }}">Брелоки</a>
+        </div>
+    </div><br>
+    <a href="{{ url_for('add_product') }}">Добавить товар</a>
+    <a href="{{ url_for('main') }}">Назад к главной странице</a><br><br>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Категории</th> <th>В наличии</th>
+            <th>Действия</th>
+        </tr>
+        {% for p in products %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.cost }}₪</td>
+            <td>
+                {# Выводим список категорий, если он не пустой #}
+                {% if p.categories_list %}
+                    {{ p.categories_list }}
+                {% else %}
+                    <span style="color: gray;">Нет категории</span>
+                {% endif %}
+            </td>
+            <td>{{ "Да" if p.available == 1 else "Нет" }}</td>
+            <td>
+                <a href="{{ url_for('edit_product', product_id=p.id) }}">Редактировать</a> |
+                <a href="{{ url_for('delete_product', product_id=p.id) }}" onclick="return confirm('Удалить?')">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+        
+</body>
+</html>
