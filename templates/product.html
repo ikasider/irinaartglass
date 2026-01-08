@@ -63,16 +63,11 @@
                     <p>{{ item.description }}</p>
                 </div>
 
-                {% if item.available %}
-                    <a id="contactBtn" href="https://wa.me/972533432657?text=..." target="_blank" class="contact-button">
+                    <a id="contactBtn" href="https://wa.me/972533432657?text=Hi, I want to know about {{ item.name }}. Cost: {{ item.cost }}" target="_blank" class="contact-button">
                         <i class="fab fa-whatsapp"></i> 
                         <span data-en="Contact" data-ru="Связаться" data-he="צור קשר">Contact</span>
                     </a>
-                {% else %}
-                    <button class="contact-button sold-button" disabled>
-                        <span data-en="Not Available" data-ru="Нет в наличии" data-he="לא זמין">Not Available</span>
-                    </button>
-                {% endif %}
+                
             </div>
         </div>
 

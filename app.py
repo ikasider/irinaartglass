@@ -95,21 +95,6 @@ def add_product():
 
     return render_template('add_product.html')
 
-def delete_product(product_id):
-    if not session.get('is_admin'):
-        return redirect(url_for('admin_login'))
-
-    if request.method == 'POST':
-        conn = sqlite3.connect(DB_PATH)
-        cur = conn.cursor()
-        cur.execute('DELETE FROM products WHERE id = ?', (product_id,))
-        conn.commit()
-        conn.close()
-        return redirect(url_for('admin_dashboard'))
-
-    return render_template('add_product.html')
-
-
 @app.route('/')
 def main():
     conn = sqlite3.connect(DB_PATH)
@@ -255,18 +240,6 @@ def edit_product(product_id):
     conn.close()
     return render_template('edit_product.html', product=product, current_cats=current_cats)
 
-@app.route('/admin/delete/<int:product_id>')
-def delete_product(product_id):
-    if not session.get('is_admin'):
-        return redirect(url_for('admin_login'))
-
-    conn = sqlite3.connect(DB_PATH)
-    cur = conn.cursor()
-    cur.execute('DELETE FROM products WHERE id = ?', (product_id,))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('admin_dashboard'))
-
 @app.route('/product/<int:product_id>')
 def product(product_id):
     conn = sqlite3.connect(DB_PATH)
@@ -284,6 +257,30 @@ def product(product_id):
                            name=product_data['name'],
                            cost=product_data['cost'],
                            image=product_data['image'])
+
+@app.route('/admin/delete/<int:product_id>')
+def delete_product(product_id):
+    if not session.get('is_admin'):
+        return redirect(url_for('admin_login'))
+
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    product = cur.execute('SELECT image FROM products WHERE id = ?', (product_id,)).fetchone()
+
+    if product:
+        image_path = os.path.join(app.root_path, 'static', product['image'])
+        if os.path.exists(image_path):
+            try:
+                os.remove(image_path)
+            except Exception as e:
+                print(f"Ошибка при удалении файла: {e}")
+        cur.execute('DELETE FROM product_categories WHERE product_id = ?', (product_id,))
+        cur.execute('DELETE FROM products WHERE id = ?', (product_id,))
+        conn.commit()
+    
+    conn.close()
+    return redirect(url_for('admin_dashboard'))
 
 
 if __name__ == '__main__':

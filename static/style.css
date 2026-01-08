@@ -699,8 +699,8 @@ header a {
     justify-content: center;
     width: 100%;
     margin-top: 20px;
+    margin-left: 10px;
 }
-
 
 .product-card {
     transition: 0.3s ease;
@@ -712,13 +712,14 @@ header a {
     overflow: visible !important;
     display: flex;
     flex-direction: column;
+    margin: 20px 10px;
 }
 
 .product-card h3 {
     font-size: 1.2em;
     font-weight: 300;
     margin-bottom: -20px;
-    margin-top: 5px;
+    margin-top: 10px;
     margin-left: 10px;
 }
 
@@ -1436,6 +1437,7 @@ footer {
 
     body {
         text-align: center;
+        max-width: 90%;
     }
 
     header ul {
@@ -1492,6 +1494,9 @@ footer {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
+    .product-card {
+        max-width: 290px;
+    }
 }
 
 @media (max-width: 320px) {
@@ -1513,6 +1518,10 @@ footer {
 
     .product-list {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .product-card {
+        max-width: 260px;
     }
 }
 
@@ -1564,7 +1573,7 @@ footer {
     text-transform: uppercase;
     transform: rotate(-5deg);
     box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
-    z-index: 9999;
+    z-index: 2000;
     pointer-events: none;
 }
 
@@ -1671,7 +1680,7 @@ footer {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
@@ -1764,7 +1773,7 @@ footer {
 
 .product-card.sold .product-image, 
 .product-card.sold img {
-    filter: grayscale(100%) brightness(60%) !important;
+    filter: brightness(80%) !important;
     opacity: 0.7;
 }
 
