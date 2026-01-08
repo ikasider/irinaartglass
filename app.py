@@ -79,10 +79,6 @@ def add_product():
                 INSERT INTO products (name, cost, image, available, description)
                 VALUES (?, ?, ?, ?, ?)
             ''', (name, cost, image_path, available, description))
-            product_id = cur.lastrowid
-            for cat in selected_categories:
-                cur.execute('INSERT INTO product_categories (product_id, category_name) VALUES (?, ?)',
-                            (product_id, cat))
             conn.commit()
             conn.close()
             return redirect(url_for('admin_dashboard'))
@@ -100,9 +96,6 @@ def admin_dashboard():
     products_with_cats = []
     for row in products_rows:
         product = dict(row)
-        cur.execute('SELECT category_name FROM product_categories WHERE product_id = ?', (product['id'],))
-        cats = cur.fetchall()
-        product['categories_list'] = ", ".join([c['category_name'] for c in cats])
         products_with_cats.append(product)
     conn.close()
     return render_template('admin_dashboard.html', products=products_with_cats)
@@ -168,7 +161,6 @@ def delete_product(product_id):
                 os.remove(image_path)
             except Exception as e:
                 print(f"Ошибка при удалении файла: {e}")
-        cur.execute('DELETE FROM product_categories WHERE product_id = ?', (product_id,))
         cur.execute('DELETE FROM products WHERE id = ?', (product_id,))
         conn.commit()
     conn.close()
@@ -221,11 +213,7 @@ def show_category(cat_name):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute('''
-        SELECT p.* FROM products p
-        JOIN product_categories pc ON p.id = pc.product_id
-        WHERE pc.category_name = ?
-    ''', (cat_name,))
+    cur.execute('SELECT * FROM products WHERE category = ? ORDER BY available DESC, id DESC', (cat_name,))
     category_items = cur.fetchall()
     conn.close()
     return render_template('category_view.html', items=category_items, titles=titles, title=cat_name)
