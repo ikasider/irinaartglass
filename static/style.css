@@ -1537,66 +1537,7 @@ footer {
     justify-content: center;
 }
 
-.product-card {
-    position: relative;
-    overflow: hidden;
-}
 
-.product-card.sold,
-.product-card.sold .image-wrapper {
-    position: relative;
-    display: block;
-    width: 100%;
-    overflow: visible !important;
-}
-
-.product-card.sold .product-image, 
-.product-card.sold img {
-    filter: grayscale(80%) brightness(70%);
-    opacity: 0.8;
-    transition: 0.3s;
-}
-
-.product-card.sold .sold-badge {
-    position: absolute;
-    top: -10px;
-    left: -15px;
-    background: #e74c3c;
-    color: white;
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transform: rotate(-10deg);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    z-index: 2;
-    pointer-events: none;
-}
-
-.product-card.sold:hover .product-image {
-    filter: grayscale(50%) brightness(80%);
-    opacity: 1;
-}
-
-.product-card.sold .inspect-button {
-    position: relative;
-    z-index: 10;
-    opacity: 1;
-}
-
-.sold-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -400%);
-    font-size: 2em;
-    font-weight: bold;
-    color: #333;
-    z-index: 5;
-    pointer-events: none;
-    text-transform: uppercase;
-    text-align: center;
-}
 
 .overlay h3 {
     margin-top: -20px;
@@ -1815,3 +1756,63 @@ footer {
     }
 }
 
+.product-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card.sold,
+.product-card.sold .image-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: visible !important;
+}
+
+.product-card.sold .product-image, 
+.product-card.sold img {
+    filter: grayscale(80%) brightness(70%);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.product-card.sold .sold-badge {
+    position: absolute;
+    top: -10px;
+    left: -15px;
+    background: #e74c3c;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transform: rotate(-10deg);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.product-card.sold:hover .product-image {
+    filter: grayscale(50%) brightness(80%);
+    opacity: 1;
+}
+
+.product-card.sold .inspect-button {
+    position: relative;
+    z-index: 10;
+    opacity: 1;
+}
+
+.sold-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -400%);
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    z-index: 5;
+    pointer-events: none;
+    text-transform: uppercase;
+    text-align: center;
+}
