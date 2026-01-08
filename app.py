@@ -225,7 +225,6 @@ def show_category(cat_name):
         SELECT p.* FROM products p
         JOIN product_categories pc ON p.id = pc.product_id
         WHERE pc.category_name = ?
-        ORDER BY p.available DESC, p.id DESC
     ''', (cat_name,))
     category_items = cur.fetchall()
     conn.close()
