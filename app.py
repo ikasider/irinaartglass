@@ -60,7 +60,7 @@ def add_product():
         cost = request.form['cost']
         description = request.form.get('description', '')
         available = 1 if request.form.get('available') == 'on' else 0
-        category = request.form.get('category', '') # Берем одну категорию
+        category = request.form.get('category', '')
 
         file = request.files.get('image_file')
         if file and file.filename != '':
@@ -138,7 +138,6 @@ def edit_product(product_id):
     cur.execute('SELECT * FROM products WHERE id = ?', (product_id,))
     product = cur.fetchone()
     conn.close()
-    # current_cats больше не нужен как список, но передаем его для совместимости
     return render_template('edit_product.html', product=product, current_cats=[product['category']])
 
 @app.route('/admin/delete/<int:product_id>')
@@ -210,7 +209,7 @@ def show_category(cat_name):
     cur.execute('SELECT * FROM products WHERE category = ? ORDER BY available DESC, id DESC', (cat_name,))
     category_items = cur.fetchall()
     conn.close()
-    return render_template('category.html', items=category_items, titles=titles, title=cat_name)
+    return render_template('category_view.html', items=category_items, titles=titles, title=cat_name)
 
 @app.route('/product/<int:product_id>')
 def product(product_id):
