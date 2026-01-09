@@ -88,14 +88,19 @@ def add_product():
 def admin_dashboard():
     if not session.get('is_admin'):
         return redirect(url_for('admin_login'))
+    selected_cat = request.args.get('category')
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute('SELECT * FROM products ORDER BY id DESC')
+    if selected_cat:
+        cur.execute('SELECT * FROM products WHERE category = ? ORDER BY id DESC', (selected_cat,))
+    else:
+        cur.execute('SELECT * FROM products ORDER BY id DESC')
     products_rows = cur.fetchall()
     products_with_cats = []
     for row in products_rows:
         product = dict(row)
+        product['categories_list'] = product.get('category', '') 
         products_with_cats.append(product)
     conn.close()
     return render_template('admin_dashboard.html', products=products_with_cats)
