@@ -1,26 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Добавить товар</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h2 { 
+            color: #2c3e50; 
+            margin-top: 0; 
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #f4f7f6;
+            padding-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+        }
+        input[type="file"] {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+        .custom-file-label {
+            display: block;
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+            color: #777;
+        }
+        .custom-file-label:hover {
+            border-color: #4CAF50;
+            background-color: #f0f9f0;
+            color: #4CAF50;
+        }
+        #upload-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+        .checkbox-group input {
+            width: auto;
+            margin: 0;
+        }
+        .btn-submit {
+            width: 100%;
+            background: #4CAF50;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #45a049;
+        }
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Добавить товар в базу</h1>
-    <form method="POST" enctype="multipart/form-data" style="max-width: 400px; margin: 20px auto;">
+
+<div class="form-container">
     <h2>Новый товар</h2>
-    <label>Название:</label><br>
-    <input type="text" name="name" required style="width: 100%"><br><br>
+    
+    <form method="POST" enctype="multipart/form-data">
+        <label for="name">Название изделия</label>
+        <input type="text" id="name" name="name" placeholder="Например: Кольцо с бирюзой" required>
 
-    <label>Цена (₪):</label><br>
-    <input type="number" step="0.01" name="cost" required style="width: 100%"><br><br>
+        <label for="cost">Цена (₪)</label>
+        <input type="number" step="0.1" id="cost" name="cost" placeholder="0.00" required>
 
-    <label>Фото изделия:</label><br>
-    <input type="file" name="image_file" accept="image/*" required><br><br>
+        <label>Фото изделия:</label>
+        <div class="file-upload-wrapper">
+            <input type="file" name="image_file" id="image_file" accept="image/*" required onchange="updateFileName(this)">
+            <label for="image_file" class="custom-file-label">
+                <span id="upload-icon">📷</span> 
+                <span id="file-text">Выберите или перетащите фото</span>
+            </label>
+        </div>
 
-        <label>Категория:</label><br>
-        <select name="category" required style="width: 100%; padding: 5px; margin-bottom: 15px;">
-            <option value="" disabled selected>Выберите одну категорию</option>
+        <label for="category">Категория</label>
+        <select name="category" id="category" required>
+            <option value="" disabled selected>Выберите категорию...</option>
             <option value="earrings">Серьги</option>
             <option value="rings">Кольца</option>
             <option value="bracelets">Браслеты</option>
@@ -36,22 +174,24 @@
             <option value="brooches">Броши</option>
             <option value="key-chains">Брелоки</option>
             <option value="sale">Скидки</option>
-        </select><br><br>
+        </select>
 
-        <label>Описание:</label><br>
-        <textarea name="description" rows="4" style="width: 100%"></textarea><br><br>
+        <label for="description">Описание товара</label>
+        <textarea id="description" name="description" rows="4" placeholder="Материалы, размеры и т.д."></textarea>
 
-        <label>
+        <label class="checkbox-group">
             <input type="checkbox" name="available" checked>
-            В наличии
-        </label><br><br>
+            <span>Товар в наличии</span>
+        </label>
 
-    <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-        Опубликовать в магазине
-    </button>
-    <a href="{{ url_for('admin_dashboard') }}">Назад к панели администратора</a>
-    <a href="{{ url_for('main') }}">Назад к главной странице</a>
-</form>
+        <button type="submit" class="btn-submit">Опубликовать в магазине</button>
+        
+        <div class="nav-links">
+            <a href="{{ url_for('admin_dashboard') }}">Назад к панели управления</a>
+            <a href="{{ url_for('main') }}">Вернуться на сайт</a>
+        </div>
+    </form>
+</div>
+
 </body>
-
 </html>

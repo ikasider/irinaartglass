@@ -1,62 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Редактирование: {{ product.name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h2 { 
+            color: #2c3e50; 
+            margin-top: 0; 
+            text-align: center;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f4f7f6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        #image_file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .custom-file-label {
+            display: block;
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .custom-file-label:hover {
+            border-color: #3498db;
+            background-color: #f0f7fb;
+            color: #3498db;
+        }
+
+        #upload-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
+        .current-photo-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .current-photo-box img {
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .file-label {
+            display: block;
+            padding: 10px;
+            background: #eee;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .file-label:hover { background: #e2e2e2; }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .checkbox-group input { width: auto; margin: 0; }
+
+        .btn-save {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-save:hover { background: #1a252f; }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <h2>Редактирование: {{ product.name }}</h2>
+
+<div class="form-container">
+    <h2>Редактировать товар</h2>
+    
     <form method="POST" enctype="multipart/form-data">
-    <label>Название:</label>
-    <input type="text" name="name" value="{{ product.name }}"><br>
+        <label>Название товара</label>
+        <input type="text" name="name" value="{{ product.name }}" required>
 
-    <label>Цена:</label>
-    <input type="number" step="0.01" name="cost" value="{{ product.cost }}"><br>
+        <label>Цена (₪)</label>
+        <input type="number" step="0.01" name="cost" value="{{ product.cost }}" required>
 
+        <label>Категория</label>
+        <select name="category">
+            {% set all_categories = [
+                ('earrings', 'Серьги'), ('bracelets', 'Браслеты'), ('rings', 'Кольца'),
+                ('necklaces', 'Ожерелья'), ('sale', 'СКИДКИ'), ('chockers', 'Чокеры'),
+                ('chains', 'Цепочки'), ('glassorbs', 'Дутыши'), ('pb', 'Пандора'),
+                ('sets', 'Наборы'), ('pendants', 'Подвески'), ('dread-beads', 'Дреды'),
+                ('historical-beads', 'Исторические'), ('brooches', 'Броши'), ('key-chains', 'Брелоки')
+            ] %}
+            {% for val, name in all_categories %}
+                <option value="{{ val }}" {% if product.category == val %} selected {% endif %}>
+                    {{ name }}
+                </option>
+            {% endfor %}
+        </select>
 
-    <label>Категория:</label><br>
-    <select name="category" style="width: 100%; padding: 10px; margin-bottom: 20px;">
-        {% set all_categories = [
-            ('earrings', 'Серьги'),
-            ('bracelets', 'Браслеты'),
-            ('rings', 'Кольца'),
-            ('necklaces', 'Ожерелья'),
-            ('sale', 'СКИДКИ'),
-            ('chockers', 'Чокеры'),
-            ('chains', 'Цепочки'),
-            ('glassorbs', 'Дутыши'),
-            ('pb', 'Пандора'),
-            ('sets', 'Наборы'),
-            ('pendants', 'Подвески'),
-            ('dread-beads', 'Дреды'),
-            ('historical-beads', 'Исторические'),
-            ('brooches', 'Броши'),
-            ('key-chains', 'Брелоки')
-        ] %}
+        <div class="current-photo-box">
+            <label>Текущее изображение:</label>
+            <img src="{{ url_for('static', filename=product.image) }}" width="120" alt="Превью">
+        </div>
 
-        {% for val, name in all_categories %}
-            <option value="{{ val }}" {% if product.category == val %} selected {% endif %}>
-                {{ name }}
-            </option>
-        {% endfor %}
-    </select>
+        <label>Заменить фото (необязательно):</label>
+        <div class="file-upload-wrapper">
+            <input type="file" name="image_file" id="image_file" accept="image/*" onchange="updateFileName(this)">  
+            <label for="image_file" class="custom-file-label">
+                <span id="upload-icon">🔄</span> 
+                <span id="file-text">Нажмите, чтобы выбрать новое фото</span>
+            </label>
+        </div>
 
-    <p>Текущее фото: <br>
-    <img src="{{ url_for('static', filename=product.image) }}" width="100"></p>
+        <label>Описание</label>
+        <textarea name="description" rows="4">{{ product.description }}</textarea>
 
-    <label>Заменить фото (оставьте пустым, чтобы не менять):</label>
-    <input type="file" name="image_file"><br><br>
+        <label class="checkbox-group">
+            <input type="checkbox" name="available" {% if product.available %}checked{% endif %}>
+            <span>Товар в наличии</span>
+        </label>
 
-    <label>Описание:</label><br>
-    <textarea name="description" rows="4" style="width: 100%">{{ product.description }}</textarea><br><br>
+        <button type="submit" class="btn-save">Сохранить изменения</button>
+        
+        <a href="{{ url_for('admin_dashboard') }}" class="back-link">← Отмена и назад</a>
+    </form>
+</div>
 
-    <label>
-    <input type="checkbox" name="available" {% if product.available %}checked{% endif %}>
-    В наличии
-    </label>
-
-    <button type="submit">Сохранить изменения</button>
-</form>
 </body>
 </html>
