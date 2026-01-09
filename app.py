@@ -221,7 +221,7 @@ def show_category(cat_name):
     cur.execute('SELECT * FROM products WHERE category = ? ORDER BY available DESC, id DESC', (cat_name,))
     category_items = cur.fetchall()
     conn.close()
-    return render_template('category_view.html', items=category_items, titles=titles, title=cat_name)
+    return render_template('category.html', items=category_items, titles=titles, title=cat_name)
 
 @app.route('/product/<int:product_id>')
 def product(product_id):
