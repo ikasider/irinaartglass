@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.secret_key = '4hff3k2j1l0m9n8b7v6c5x4z3y2w1u0t' 
-ADMIN_PASSWORD = '64dh5@83g94j382k5!'
+ADMIN_PASSWORD = '3311973'
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
