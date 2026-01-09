@@ -15,6 +15,24 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 DB_PATH = os.path.join(BASE_DIR, 'artglass.db')
 
+def setup_database():
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            cost REAL NOT NULL,
+            image TEXT NOT NULL,
+            available INTEGER NOT NULL DEFAULT 1,
+            description TEXT DEFAULT '',
+            category TEXT DEFAULT ''
+        )
+    ''')
+    conn.commit()
+    conn.close()
+setup_database()
+
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
