@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.secret_key = '4hff3k2j1l0m9n8b7v6c5x4z3y2w1u0t'
 ADMIN_PASSWORD = '64dh5@83g94j382k5!'
 
-# Используем абсолютный путь для загрузок, чтобы избежать PermissionError
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -26,14 +25,8 @@ def init_db():
             cost REAL NOT NULL,
             image TEXT NOT NULL,
             available INTEGER NOT NULL DEFAULT 1,
-            description TEXT DEFAULT ''
-        )
-    ''')
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS product_categories (
-            product_id INTEGER,
-            category_name TEXT,
-            FOREIGN KEY (product_id) REFERENCES products (id)
+            description TEXT DEFAULT '',
+            category TEXT DEFAULT ''
         )
     ''')
     conn.commit()
@@ -65,7 +58,7 @@ def add_product():
         cost = request.form['cost']
         description = request.form.get('description', '')
         available = 1 if request.form.get('available') == 'on' else 0
-        selected_categories = request.form.getlist('categories')
+        category = request.form.get('category', '') # Берем одну категорию
 
         file = request.files.get('image_file')
         if file and file.filename != '':
@@ -76,9 +69,9 @@ def add_product():
             conn = sqlite3.connect(DB_PATH)
             cur = conn.cursor()
             cur.execute('''
-                INSERT INTO products (name, cost, image, available, description)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (name, cost, image_path, available, description))
+                INSERT INTO products (name, cost, image, available, description, category)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (name, cost, image_path, available, description, category))
             conn.commit()
             conn.close()
             return redirect(url_for('admin_dashboard'))
@@ -97,13 +90,13 @@ def admin_dashboard():
     else:
         cur.execute('SELECT * FROM products ORDER BY id DESC')
     products_rows = cur.fetchall()
-    products_with_cats = []
+    products_list = []
     for row in products_rows:
         product = dict(row)
         product['categories_list'] = product.get('category', '') 
-        products_with_cats.append(product)
+        products_list.append(product)   
     conn.close()
-    return render_template('admin_dashboard.html', products=products_with_cats)
+    return render_template('admin_dashboard.html', products=products_list)
 
 @app.route('/admin/edit/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
@@ -119,7 +112,7 @@ def edit_product(product_id):
         cost = request.form['cost']
         description = request.form.get('description', '')
         available = 1 if request.form.get('available') == 'on' else 0
-        selected_categories = request.form.getlist('categories')
+        category = request.form.get('category', '')
 
         file = request.files.get('image_file')
         if file and file.filename != '':
@@ -132,24 +125,19 @@ def edit_product(product_id):
 
         cur.execute('''
             UPDATE products 
-            SET name = ?, cost = ?, image = ?, available = ?, description = ?
+            SET name = ?, cost = ?, image = ?, available = ?, description = ?, category = ?
             WHERE id = ?
-        ''', (name, cost, image_path, available, description, product_id))
+        ''', (name, cost, image_path, available, description, category, product_id))
 
-        cur.execute('DELETE FROM product_categories WHERE product_id = ?', (product_id,))
-        for cat in selected_categories:
-            cur.execute('INSERT INTO product_categories (product_id, category_name) VALUES (?, ?)',
-                        (product_id, cat))
         conn.commit()
         conn.close()
         return redirect(url_for('admin_dashboard'))
 
     cur.execute('SELECT * FROM products WHERE id = ?', (product_id,))
     product = cur.fetchone()
-    cur.execute('SELECT category_name FROM product_categories WHERE product_id = ?', (product_id,))
-    current_cats = [row['category_name'] for row in cur.fetchall()]
     conn.close()
-    return render_template('edit_product.html', product=product, current_cats=current_cats)
+    # current_cats больше не нужен как список, но передаем его для совместимости
+    return render_template('edit_product.html', product=product, current_cats=[product['category']])
 
 @app.route('/admin/delete/<int:product_id>')
 def delete_product(product_id):
@@ -164,8 +152,7 @@ def delete_product(product_id):
         if os.path.exists(image_path):
             try:
                 os.remove(image_path)
-            except Exception as e:
-                print(f"Ошибка при удалении файла: {e}")
+            except: pass
         cur.execute('DELETE FROM products WHERE id = ?', (product_id,))
         conn.commit()
     conn.close()
@@ -206,7 +193,7 @@ def show_category(cat_name):
         'bracelets': {'ru': 'Браслеты', 'en': 'Bracelets', 'he': 'צמידים'},
         'chockers': {'ru': 'Чокеры', 'en': 'Chokers', 'he': 'צמידי צוואר'},
         'chains': {'ru': 'Цепочки', 'en': 'Chains', 'he': 'שרשראות'},
-        'glassorbs': {'ru': 'Дутыши', 'en': 'Glass Orbs', 'he': 'כדורי זכוכит'},
+        'glassorbs': {'ru': 'Дутыши', 'en': 'Glass Orbs', 'he': 'כדורי זכוכית'},
         'pb': {'ru': 'Пандора', 'en': 'Pandora', 'he': 'פנדורה'},
         'sets': {'ru': 'Наборы', 'en': 'Sets', 'he': 'סטים'},
         'dread-beads': {'ru': 'Дреды', 'en': 'Dread Beads', 'he': 'חרוזי דרד'},
