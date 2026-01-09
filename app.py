@@ -35,16 +35,17 @@ def init_db():
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    error = None
+    if session.get('is_admin'):
+        return redirect(url_for('admin_dashboard'))
     if request.method == 'POST':
         password = request.form.get('password')
         if password == ADMIN_PASSWORD:
-            session.permanent = True 
+            session.permanent = True  
             session['is_admin'] = True
             return redirect(url_for('admin_dashboard'))
         else:
-            error = "Неверный пароль!"
-    return render_template('login.html', error=error)
+            return "Неверный пароль!", 403
+    return render_template('login.html')
 
 @app.route('/admin/logout')
 def admin_logout():
