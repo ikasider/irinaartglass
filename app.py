@@ -2,32 +2,18 @@ import sqlite3
 import os
 from flask import Flask, render_template, abort, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
-from flask_session import Session
 
 app = Flask(__name__)
-ADMIN_PASSWORD = '64dh5@83g94j382k5!'
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'artglass.db')
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
-SESSION_DIR = os.path.join(BASE_DIR, 'flask_session')
 
-app.config.update(
-    SESSION_TYPE='filesystem',
-    SESSION_FILE_DIR=SESSION_DIR,
-    SESSION_PERMANENT=True,
-    PERMANENT_SESSION_LIFETIME=3600 * 24 * 7,
-    SESSION_COOKIE_NAME='admin_session',
-    SESSION_USE_SIGNER=True,
-    SESSION_COOKIE_SECURE=True if not os.environ.get('DEBUG') else False,
-    SESSION_COOKIE_SAMESITE='Lax',
-)
-
-app.secret_key = 'sd235hfdJd!2f87&fdKL*fx5vdA+FD'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(SESSION_DIR, exist_ok=True)
 
-Session(app)
+app.secret_key = '4hff3k2j1l0m9n8b7v6c5x4z3y2w1u0t' 
+ADMIN_PASSWORD = '64dh5@83g94j382k5!'
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
