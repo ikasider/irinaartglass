@@ -32,6 +32,8 @@ def init_db():
     conn.commit()
     conn.close()
 
+init_db()
+
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
@@ -232,5 +234,4 @@ def gallery(): return render_template('gallery.html')
 def contact(): return render_template('contact.html')
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)
