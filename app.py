@@ -3,7 +3,9 @@ import os
 from flask import Flask, render_template, abort, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+app = Flask(__name__, 
+            template_folder=os.path.join(base_dir, 'templates'),
+            static_folder=os.path.join(base_dir, 'static'))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'artglass.db')
@@ -14,6 +16,13 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.secret_key = '4hff3k2j1l0m9n8b7v6c5x4z3y2w1u0t' 
 ADMIN_PASSWORD = '3311973'
+
+IS_VERCEL = os.environ.get('VERCEL') == '1'
+
+if IS_VERCEL:
+    DB_PATH = '/tmp/artglass.db'
+else:
+    DB_PATH = os.path.join(os.path.dirname(__file__), 'artglass.db')
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -238,3 +247,5 @@ init_db()
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+app = app
