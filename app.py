@@ -9,11 +9,11 @@ IS_VERCEL = "VERCEL" in os.environ
 if IS_VERCEL:
     DB_PATH = '/tmp/artglass.db'
 else:
-    DB_PATH = os.path.join(base_dir, 'artglass.db')
+    DB_PATH = os.path.join(BASE_DIR, 'artglass.db')
 
 app = Flask(__name__, 
-            template_folder=os.path.join(base_dir, 'templates'),
-            static_folder=os.path.join(base_dir, 'static'))
+            template_folder=os.path.join(BASE_DIR, 'templates'),
+            static_folder=os.path.join(BASE_DIR, 'static'))
 
 DB_PATH = os.path.join(BASE_DIR, 'artglass.db')
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
