@@ -274,7 +274,7 @@ if IS_VERCEL:
         return send_from_directory(UPLOAD_FOLDER, filename)
 
 # Инициализация базы данных при старте приложения
-init_db()
+# init_db()
 
 if __name__ == '__main__':
     app.run(debug=True)
