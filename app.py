@@ -20,9 +20,7 @@ if IS_VERCEL:
 else:
     UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
 
-app = Flask(__name__, 
-            template_folder=os.path.join(BASE_DIR, 'templates'),
-            static_folder=os.path.join(BASE_DIR, 'static'))
+app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -40,24 +38,24 @@ def get_db_connection():
         conn = psycopg2.connect(DATABASE_URL)
     return conn
 
-def init_db():
-    """Создание таблицы products в PostgreSQL/Supabase"""
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS products (
-            id SERIAL PRIMARY KEY,
-            name TEXT NOT NULL,
-            cost REAL NOT NULL,
-            image TEXT NOT NULL,
-            available BOOLEAN NOT NULL DEFAULT TRUE,
-            description TEXT DEFAULT '',
-            category TEXT DEFAULT ''
-        )
-    ''')
-    conn.commit()
-    cur.close()
-    conn.close()
+# def init_db():
+#     """Создание таблицы products в PostgreSQL/Supabase"""
+#     conn = get_db_connection()
+#     cur = conn.cursor()
+#     cur.execute('''
+#         CREATE TABLE IF NOT EXISTS products (
+#             id SERIAL PRIMARY KEY,
+#             name TEXT NOT NULL,
+#             cost REAL NOT NULL,
+#             image TEXT NOT NULL,
+#             available BOOLEAN NOT NULL DEFAULT TRUE,
+#             description TEXT DEFAULT '',
+#             category TEXT DEFAULT ''
+#         )
+#     ''')
+#     conn.commit()
+#     cur.close()
+#     conn.close()
 
 
 @app.route('/admin/login', methods=['GET', 'POST'])
