@@ -11,9 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&family=Smooch+Sans:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
 </head>
 <body>
     <header>
@@ -24,7 +24,7 @@
                 <option value="he">🇮🇱 עברית</option>
             </select>
         </div>
-        <a href="{{ url_for('index') }}"><h1>Irina Artglass</h1></a>
+        <a href="{{ url_for('main') }}"><h1>Irina Artglass</h1></a>
         <p>Capturing the world through glass</p>
         <div class="phone-number">
             <i class="fa-solid fa-phone"></i>
@@ -39,7 +39,7 @@
     </header>
     <main>
         <div class="category">
-                <a href="{{ url_for('index') }}">
+                <a href="{{ url_for('main') }}">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span data-en="Home" data-ru="Главная" data-he="בית">Home</span>
                 </a>
@@ -50,7 +50,7 @@
         {% for item in items %}
             {% if item.available %}
                 <div class="product-card">
-                    <img src="{{ url_for('static', filename=item.image) }}">
+                    <img src="/static/{{ item.image }}">
                     <h3>{{ item.name }}</h3>
                     <p>{{ item.cost }} ₪</p>
                     <a class="inspect-button" href="{{ url_for('product', product_id=item.id) }}" data-en="Inspect" data-ru="Посмотреть" data-he="הצג">Inspect</a>
@@ -58,7 +58,7 @@
                 {% else %}
                 <div class="product-card sold">
                     <div class="image-wrapper">
-                        <img src="{{ url_for('static', filename=item.image) }}" class="product-image">
+                        <img src="/static/{{ item.image }}" class="product-image">
                         <div class="sold-badge" data-en="Sold" data-ru="Продано" data-he="נמכר">Sold</div>
                     </div>
                     
@@ -85,5 +85,5 @@
         </div>
     </footer>
 </body>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="/static/script.js"></script>
 </html>
